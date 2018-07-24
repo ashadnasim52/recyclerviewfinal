@@ -8,23 +8,34 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
 
     MyRecyclerViewAdapter adapter;
-    ArrayList<String> animalNames;
+    ArrayList<String> extraarray;
+    ArrayList<String> titlearray;
+    ArrayList<String> complainarray;
+    ArrayList<String> namearray;
+    ArrayList<String> emailarray;
+
     RecyclerView recyclerView;
+
+    String title;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -35,88 +46,140 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        animalNames = new ArrayList<>();
+        extraarray = new ArrayList<>();
         // data to populate the RecyclerView with
 
 
         recyclerView = findViewById(R.id.rvAnimals);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goaadt");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goadat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goadat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goaassdt");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goat");
-        animalNames.add("Goassdat");
-        animalNames.add("Goaassdt");
-        animalNames.add("Goat");
-        animalNames.add("Goasdat");
-        animalNames.add("Gadoat");
-        animalNames.add("Goat");
-        animalNames.add("Goaadadaaadt");
-        animalNames.add("Godadadat");
-        animalNames.add("Gosadaat");
-        animalNames.add("Goaasdt");
-        animalNames.add("Goaat");
-        animalNames.add("Goaasdat");
 
-        ValueEventListener valueEventListener=new ValueEventListener() {
+
+
+
+
+
+//        user.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                String value=dataSnapshot.getValue().toString();
+////                animalNames.add(dataSnapshot.toString());
+//                Gson gson = new Gson();
+//                String s1 = gson.toJson(dataSnapshot.getValue());
+//                try {
+//                    JSONObject jsonObject=new JSONObject(value);
+//
+//                    title=jsonObject.getString("Name");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                Log.i("titsdfsdfle","iss "+title);
+//
+//                animalNames.add(title);
+//
+//                adapter = new MyRecyclerViewAdapter(getApplicationContext(), animalNames);
+//                recyclerView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });animalNames
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+        ChildEventListener childEventListener=new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Log.i("TSG","is "+ds);
+//                animalNames.add(dataSnapshot.toString());
+                Log.i("datasnapshot","is"+dataSnapshot);
 
-                    String altro = ds.child("key").getValue(String.class);
-                    String cognome = ds.child("value").getValue(String.class);
-                    String informazioni = ds.child("Informazioni").getValue(String.class);
-                    String nome = ds.child("Nome").getValue(String.class);
-                    animalNames.add(altro);
-                    animalNames.add(cognome);
-                    animalNames.add(informazioni);
-                    Log.d("TAG", altro + " / " + cognome + " / " + informazioni + " / " + nome);
-                }
-                adapter = new MyRecyclerViewAdapter(getApplicationContext(), animalNames);
+                    Log.i("datasnapshotatonepsio","is "+dataSnapshot);
+
+
+
+                    Itemclass itemclass=dataSnapshot.getValue(Itemclass.class);
+                    String extra=itemclass.getextra();
+                    String name=itemclass.getName();
+                    String complaian=itemclass.getComplain();
+                    String title=itemclass.getcomplaintitle();
+                    String email=itemclass.getEmail();
+
+
+                extraarray.add(extra);
+                complainarray.add(complaian);
+                emailarray.add(email);
+                namearray.add(name);
+                titlearray.add(title);
+
+//                    arraylistofitem.add(itemclass);
+
+
+//                    String altro = ds.child("Name").getValue(String.class);
+//                    String asd=ds.getChildren().toString();
+//
+//                    Log.i("childrenis","is"+asd);
+//                    String as= ds.getKey();
+//                    Log.i("dsskeyis","is"+as);
+//                    Boolean a=ds.hasChild("LIBg7gn1S0126t1ONnJ");
+//                    Log.i("haikinahi"," is" +a);
+//
+//                    HashMap<String ,String > uid= new HashMap<>();
+//                    uid.put("Uid",altro);
+//                    Log.i("dataofuid","is of"+uid);
+//                    String cognome = ds.child("value").getValue(String.class);
+//                    String informazioni = ds.child("Informazioni").getValue(String.class);
+//                    String nome = ds.child("Nome").getValue(String.class);
+//                    animalNames.add(altro);
+//                    animalNames.add(cognome);
+//                    animalNames.add(informazioni);
+//                    Log.d("TAG", altro + " / " + cognome + " / " + informazioni + " / " + nome);
+
+                adapter = new MyRecyclerViewAdapter(getApplicationContext(), titlearray);
                 recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
@@ -124,7 +187,47 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
             }
         };
-        user.addListenerForSingleValueEvent(valueEventListener);
+        user.addChildEventListener(childEventListener);
+
+//        ValueEventListener valueEventListener=new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String value=dataSnapshot.getChildren().toString();
+//                Log.i("atag","is "+dataSnapshot);
+//
+//                try {
+//                    JSONObject jsonObject=new JSONObject(value);
+//                    title= jsonObject.getString("UId");
+//
+//                    Log.i("TSsG","is "+title);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+        //                    animalNames.add(title);
+
+////
+////                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+////                    Log.i("TSG","is "+ds);
+////
+////                    String altro = ds.child("UId").getValue(String.class);
+////                    String cognome = ds.child("value").getValue(String.class);
+////                    String informazioni = ds.child("Informazioni").getValue(String.class);
+////                    String nome = ds.child("Nome").getValue(String.class);
+////                    animalNames.add(altro);
+////                    animalNames.add(cognome);
+////                    animalNames.add(informazioni);
+////                    Log.d("TAG", altro + " / " + cognome + " / " + informazioni + " / " + nome);
+////                }
+//                adapter = new MyRecyclerViewAdapter(getApplicationContext(), animalNames);
+//                recyclerView.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        };
+//        user.addListenerForSingleValueEvent(valueEventListener);
 
 
         // set up the RecyclerView
@@ -144,6 +247,9 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
+
+
+
 }

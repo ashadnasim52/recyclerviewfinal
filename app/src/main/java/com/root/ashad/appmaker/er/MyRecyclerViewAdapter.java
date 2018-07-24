@@ -32,6 +32,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String animal = mData.get(position);
+//        Itemclass curremntitem=mData.get(position);
         holder.myTextView.setText(animal);
     }
 
@@ -59,9 +60,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData.get(id);
-    }
+//    String getItem(int id) {
+//        return mData.get(id);
+//    }
 
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
