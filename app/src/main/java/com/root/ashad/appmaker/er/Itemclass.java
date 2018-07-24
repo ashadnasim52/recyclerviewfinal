@@ -3,16 +3,16 @@ package com.root.ashad.appmaker.er;
 public class Itemclass {
     private  String extra;
     private String title;
-    private  String Complain;
+    private  String complain;
     private  String name;
     private String email;
 
-    public String getComplain() {
-        return Complain;
+    public String getcomplain() {
+        return complain;
     }
 
-    public void setComplain(String complain) {
-        this.Complain = complain;
+    public void setcomplain(String complain) {
+        this.complain = complain;
     }
 
     public String getName() {
@@ -38,7 +38,7 @@ public class Itemclass {
         this.extra = extra;
     }
 
-    public void setComplaintitle(String complaintitle) {
+    public void setTitle(String complaintitle) {
         this.title = complaintitle;
     }
 
@@ -46,7 +46,7 @@ public class Itemclass {
         return extra;
     }
 
-    public String getcomplaintitle() {
+    public String getTitle() {
         return title;
     }
 }

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     RecyclerView recyclerView;
 
-    String title;
+//    String title;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         setContentView(R.layout.activity_main);
 
         extraarray = new ArrayList<>();
+        complainarray=new ArrayList<>();
+        emailarray=new ArrayList<>();
+        namearray=new ArrayList<>();
+        titlearray=new ArrayList<>();
+
         // data to populate the RecyclerView with
 
 
@@ -128,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                     Itemclass itemclass=dataSnapshot.getValue(Itemclass.class);
                     String extra=itemclass.getextra();
                     String name=itemclass.getName();
-                    String complaian=itemclass.getComplain();
-                    String title=itemclass.getcomplaintitle();
+                    String complaian=itemclass.getcomplain();
+                    String title=itemclass.getTitle();
                     String email=itemclass.getEmail();
 
 
@@ -138,6 +143,13 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                 emailarray.add(email);
                 namearray.add(name);
                 titlearray.add(title);
+                Log.i("gantaitemsttles"," Are title "+titlearray);
+                Log.i("gantaitemsttles"," Are extra"+extraarray);
+                Log.i("gantaitemsttles"," Are complan "+complainarray);
+                Log.i("gantaitemsttles"," Are emal"+emailarray);
+                Log.i("gantaitemsttles"," Are name"+namearray);
+
+
 
 //                    arraylistofitem.add(itemclass);
 
@@ -163,9 +175,12 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 //                    Log.d("TAG", altro + " / " + cognome + " / " + informazioni + " / " + nome);
 
                 adapter = new MyRecyclerViewAdapter(getApplicationContext(), titlearray);
+
+                adapter.setClickListener(this);
                 recyclerView.setAdapter(adapter);
 
             }
+
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -247,7 +262,8 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-//        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Log.i("complananother","is "+titlearray);
+        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
 
